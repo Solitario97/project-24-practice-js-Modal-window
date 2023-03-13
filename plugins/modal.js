@@ -29,6 +29,7 @@ $.modal = function(options) {
     const ANIMATION_SPEED = 200;
     const $modal = _createModal(options);
     let closing = false;
+    let destroyed = false;
 
     const modal = {
         open() {
@@ -45,12 +46,18 @@ $.modal = function(options) {
         },
     }
 
-    $modal.addEventListener("click", event => {
-        console.log('clicked', event.target.dataset.close);
+    const listener = event => {
         if (event.target.dataset.close) {
             modal.close();
-        }
-    });
+    }
+
+
+    $modal.addEventListener("click", listener);
     
-    return modal
+    return Object.assign(modal, {
+        destroy() {
+            $modal.parentNode.removeChild($modal);
+            destroyed = true;
+        }
+    })
 };
