@@ -9,7 +9,7 @@ function _createModal(options) {
                     <span class="modal-title">${options.title || 'Окно'}</span>
                     ${options.closable ? `<span class="modal-close" data-close='true'>&times;</span>` : ''}
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" data-content>
                     ${options.content || ''}
                 </div>
                 <div class="modal-footer">
@@ -26,10 +26,10 @@ function _createModal(options) {
 
 
 $.modal = function(options) {
-    const ANIMATION_SPEED = 200;
-    const $modal = _createModal(options);
-    let closing = false;
-    let destroyed = false;
+    const ANIMATION_SPEED = 200
+    const $modal = _createModal(options)
+    let closing = false
+    let destroyed = false
 
     const modal = {
         open() {
@@ -49,6 +49,7 @@ $.modal = function(options) {
     const listener = event => {
         if (event.target.dataset.close) {
             modal.close();
+        }
     }
 
 
@@ -58,6 +59,9 @@ $.modal = function(options) {
         destroy() {
             $modal.parentNode.removeChild($modal);
             destroyed = true;
+        },
+        setContent(html) {
+            $modal.querySelector('[data-content]').innerHTML = html;
         }
     })
-};
+}
