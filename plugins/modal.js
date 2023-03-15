@@ -24,7 +24,6 @@ function _createModal(options) {
 }
 
 
-
 $.modal = function(options) {
     const ANIMATION_SPEED = 200
     const $modal = _createModal(options)
